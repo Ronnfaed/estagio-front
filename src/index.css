@@ -11,3 +11,44 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.Main{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 30px;
+  flex-direction: column;
+}
+
+.formUpload{
+  padding: 20px;
+  border: 1px solid black;
+  width: 25%;
+  text-align: center;
+}
+
+.formInputs{
+  margin-bottom: 30px;
+  border-color: black !important;
+}
+
+.btn{
+  background-color:black;
+}
+
+
+.saida{
+  margin-top: 30px;
+ width: 100%;
+ text-align: center;
+  
+}
+.output-div{
+  display: flex;
+    justify-content: space-evenly;
+}
+
+.output-inner-div{
+  display: flex;
+    flex-direction: column;
+}
