@@ -1,15 +1,13 @@
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
 .Main{
@@ -39,16 +37,21 @@ code {
 
 .saida{
   margin-top: 30px;
- width: 100%;
- text-align: center;
+  width: 100%;
+  text-align: center;
   
 }
 .output-div{
   display: flex;
-    justify-content: space-evenly;
+  justify-content: space-evenly;
 }
 
 .output-inner-div{
   display: flex;
-    flex-direction: column;
+  flex-direction: column;
+}
+
+.textBox{
+  display: flex;
+  margin-top: 100px;
 }

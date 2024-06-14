@@ -4,7 +4,7 @@ import './App.css';
 
 
 function App() {
-
+  const[motivo, setMotivo] = useState("");
   const[title, setTitle] = useState("");
   const[file, setFile] = useState("");
   const [allImage, setAllImage] = useState(null);
@@ -76,14 +76,35 @@ function App() {
             return (
               <div className="output-inner-div">
               <h6>Título: {data.title}</h6>
-              <button className="btn btn-primary" onClick={()=>showPdf(data.pdf)}>Mostrar</button>
+              <button className="btn btn-primary" onClick={()=>showPdf(data.pdf)}>Mostrar PDF</button>
+              <button className="btn btn-secondary" style = {{ marginTop: '10px'}}>Converter Documento</button>
               </div>
             );
           })}
 
         </div>
-
       </div>
+
+      
+  <div className="textBox" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+
+    <h4 style={{ margin: '0 0 5px 0', textAlign: 'center' }}>Teste</h4>
+
+    <textarea
+      name="motivo"
+      value={motivo}
+      style={{ width: '400%', boxSizing: 'border-box' }}
+    ></textarea>
+
+  </div>
+
+
+
+
+
+
+
+
 
     </div>
   );
