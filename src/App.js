@@ -1,5 +1,5 @@
 // Importa os hooks useEffect e useState do React.
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 
 // Importa o axios para fazer requisições HTTP.
 import axios from "axios";
@@ -9,13 +9,13 @@ import './App.css';
 
 function App() {
   // Define o estado 'motivo' com o valor inicial como uma string vazia.
-  const[motivo, setMotivo] = useState("");
+  const [motivo, setMotivo] = useState("");
 
   // Define o estado 'title' com o valor inicial como uma string vazia.
-  const[title, setTitle] = useState("");
+  const [title, setTitle] = useState("");
 
   // Define o estado 'file' com o valor inicial como uma string vazia.
-  const[file, setFile] = useState("");
+  const [file, setFile] = useState("");
 
   // Define o estado 'allImage' com o valor inicial como null.
   const [allImage, setAllImage] = useState(null);
@@ -34,7 +34,7 @@ function App() {
   }, []);
 
   // Função assíncrona para enviar o arquivo PDF para o servidor.
-  const submitImage = async(e) => {
+  const submitImage = async (e) => {
     e.preventDefault(); // Previne o comportamento padrão do formulário.
     const formData = new FormData(); // Cria um novo objeto FormData.
     formData.append("title", title); // Adiciona o título ao FormData.
@@ -43,16 +43,16 @@ function App() {
 
     // Envia o FormData para o servidor.
     const result = await axios.post(
-      "http://localhost:5000/upload-files", 
+      "http://localhost:5000/upload-files",
       formData, {
-      header: {"Content-Type": "multipart/form-data"},
-      }
+      header: { "Content-Type": "multipart/form-data" },
+    }
     );
-  
+
     console.log(result);
 
     // Se o upload for bem-sucedido, exibe um alerta e atualiza a lista de PDFs.
-    if(result.data.status === "ok"){
+    if (result.data.status === "ok") {
       alert("PDF subido com sucesso");
       getPdf();
     }
@@ -63,15 +63,33 @@ function App() {
     window.open(`http://localhost:5000/files/${pdf}`, "_blank", "noreferrer");
   }
 
+  // Função para deletar um PDF
+  const deletePdf = async (pdf) => {
+    try {
+        const result = await axios.delete(`http://localhost:5000/delete-file/${pdf}`);
+        // Se a exclusão for bem-sucedida, atualiza a lista de PDFs.
+        if (result.data.status === "ok") {
+            alert("PDF deletado com sucesso");
+            getPdf();
+        } else {
+            alert(result.data.message); // Mostra a mensagem de erro retornada do servidor
+        }
+    } catch (error) {
+        console.error("Erro ao deletar o PDF: ", error);
+        alert("Erro ao deletar o PDF.");
+    }
+  };
+
+
   return (
     <div className="Main">
       {/* Formulário para upload de arquivos */}
       <form className="formUpload" onSubmit={submitImage}>
         <h4>Leitor de PDF</h4>
         <br></br>
-        <input type="text" className="formInputs" placeholder="Título" required onChange={(e)=>setTitle(e.target.value)}/>
+        <input type="text" className="formInputs" placeholder="Título" required onChange={(e) => setTitle(e.target.value)} />
         <br></br>
-        <input type="file" className="formInputs" accept="application/pdf" required onChange={(e)=>setFile(e.target.files[0])}/>
+        <input type="file" className="formInputs" accept="application/pdf" required onChange={(e) => setFile(e.target.files[0])} />
         <br></br>
         <button className="btn" type="submit">Enviar</button>
       </form>
@@ -81,16 +99,17 @@ function App() {
         <h4>Saída:</h4>
         <div className="output-div">
           {allImage == null
-          ? ""
-          : allImage.map((data)=>{
-            return (
-              <div className="output-inner-div">
-                <h6>Título: {data.title}</h6>
-                <button className="btn btn-primary" onClick={()=>showPdf(data.pdf)}>Mostrar PDF</button>
-                <button className="btn btn-secondary" style={{ marginTop: '10px'}}>Converter Documento</button>
-              </div>
-            );
-          })}
+            ? ""
+            : allImage.map((data) => {
+              return (
+                <div className="output-inner-div" key={data.pdf}>
+                  <h6>Título: {data.title}</h6>
+                  <button className="btn btn-primary" onClick={() => showPdf(data.pdf)}>Mostrar PDF</button>
+                  <button className="btn btn-secondary" style={{ marginTop: '10px' }}>Converter Documento</button>
+                  <button className="btn btn-secondary" style={{ marginTop: '10px', backgroundColor: 'red' }} onClick={() => deletePdf(data.pdf)}>Deletar Documento</button>
+                </div>
+              );
+            })}
         </div>
       </div>
 
